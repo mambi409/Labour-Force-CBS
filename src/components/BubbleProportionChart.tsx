@@ -156,7 +156,7 @@ export const BubbleProportionChart: React.FC<BubbleProportionChartProps> = ({ da
       <div className="h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 20, right: 30, left: -10, bottom: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" vertical={true} />
             <XAxis
               type="number"
               dataKey={xAxisMode}
