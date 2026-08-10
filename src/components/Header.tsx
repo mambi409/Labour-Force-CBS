@@ -20,7 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
   latestUnemploymentRate,
 }) => {
   return (
-    <header className="h-20 bg-slate-100/95 backdrop-blur-md border-b border-slate-300 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+    <header className="h-20 bg-gradient-to-b from-slate-300 via-slate-200 to-slate-100 border-b border-slate-300/80 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-md">
       {/* CBS Logo & Title */}
       <div className="flex items-center gap-4 sm:gap-6">
         <CbsLogo className="h-12" />
@@ -61,7 +61,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={onResetData}
             title="Reset data"
-            className="p-2 sm:px-3 sm:py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
+            className="p-2 sm:px-3 sm:py-2 text-xs font-semibold text-slate-800 bg-white/90 hover:bg-white border border-slate-300/80 rounded-xl transition-all shadow-2xs cursor-pointer"
           >
             <RotateCcw className="w-4 h-4 sm:hidden" />
             <span className="hidden sm:inline">Reset</span>
@@ -70,7 +70,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={onExportCsv}
             title="Export CSV"
-            className="p-2 sm:px-3 sm:py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
+            className="p-2 sm:px-3 sm:py-2 text-xs font-semibold text-slate-800 bg-white/90 hover:bg-white border border-slate-300/80 rounded-xl transition-all shadow-2xs cursor-pointer"
           >
             <Download className="w-4 h-4 sm:hidden" />
             <span className="hidden sm:inline">CSV Export</span>
