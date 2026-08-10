@@ -1,0 +1,6 @@
+{
+  "name": "Curacao Labour Force Dashboard",
+  "description": "Proportional chart dashboard and analytics for Labour Force of Curacao 2016 - 2025",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
