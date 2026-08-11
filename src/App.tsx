@@ -23,10 +23,6 @@ export default function App() {
     setData(INITIAL_CURACAO_DATA);
   };
 
-  const handleDeleteRow = (year: number) => {
-    setData((prev) => prev.filter((d) => d.year !== year));
-  };
-
   const handleExportCsv = () => {
     const headers = 'Year,Total Population,Population 0-14,Population 15+,Labour Force,Employed Population,Unemployed Population,Economically Not Active,Unemployment Rate (%)\n';
     const rows = sortedData
@@ -144,7 +140,6 @@ export default function App() {
           <div className="space-y-6">
             <DataTable
               data={data}
-              onDeleteRow={handleDeleteRow}
               onExportCsv={handleExportCsv}
             />
           </div>

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { LabourDataPoint } from '../types';
-import { Table, Download, Trash2 } from 'lucide-react';
+import { Table, Download } from 'lucide-react';
 
 interface DataTableProps {
   data: LabourDataPoint[];
-  onAddRow?: (point: LabourDataPoint) => void;
-  onDeleteRow: (year: number) => void;
   onExportCsv: () => void;
 }
 
-export const DataTable: React.FC<DataTableProps> = ({ data, onDeleteRow, onExportCsv }) => {
+export const DataTable: React.FC<DataTableProps> = ({ data, onExportCsv }) => {
   const [showPercentages, setShowPercentages] = useState<boolean>(false);
 
   const sortedData = [...data].sort((a, b) => a.year - b.year);
@@ -73,7 +71,6 @@ export const DataTable: React.FC<DataTableProps> = ({ data, onDeleteRow, onExpor
               <th className="py-3.5 px-4 text-right">Unemployed</th>
               <th className="py-3.5 px-4 text-right">Inactive</th>
               <th className="py-3.5 px-4 text-right">Unemp Rate (% LF)</th>
-              <th className="py-3.5 px-4 text-center">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 bg-white">
@@ -143,16 +140,6 @@ export const DataTable: React.FC<DataTableProps> = ({ data, onDeleteRow, onExpor
                   }`}>
                     {row.unemploymentRate}%
                   </span>
-                </td>
-
-                <td className="py-3.5 px-4 text-center">
-                  <button
-                    onClick={() => onDeleteRow(row.year)}
-                    title={`Delete data for ${row.year}`}
-                    className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition-colors cursor-pointer"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
                 </td>
               </tr>
             ))}
