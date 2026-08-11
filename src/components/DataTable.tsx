@@ -1,48 +1,18 @@
 import React, { useState } from 'react';
 import { LabourDataPoint } from '../types';
-import { computeDataPoint } from '../data/curacaoData';
-import { Table, Download, Plus, Trash2 } from 'lucide-react';
+import { Table, Download, Trash2 } from 'lucide-react';
 
 interface DataTableProps {
   data: LabourDataPoint[];
-  onAddRow: (point: LabourDataPoint) => void;
+  onAddRow?: (point: LabourDataPoint) => void;
   onDeleteRow: (year: number) => void;
   onExportCsv: () => void;
 }
 
-export const DataTable: React.FC<DataTableProps> = ({ data, onAddRow, onDeleteRow, onExportCsv }) => {
+export const DataTable: React.FC<DataTableProps> = ({ data, onDeleteRow, onExportCsv }) => {
   const [showPercentages, setShowPercentages] = useState<boolean>(false);
-  const [isAdding, setIsAdding] = useState<boolean>(false);
-
-  // New row form state
-  const [newYear, setNewYear] = useState<number>(2021);
-  const [newTotalPop, setNewTotalPop] = useState<number>(150000);
-  const [newPop0To14, setNewPop0To14] = useState<number>(25000);
-  const [newPop15Plus, setNewPop15Plus] = useState<number>(125000);
-  const [newEmployedPop, setNewEmployedPop] = useState<number>(60000);
-  const [newUnempPop, setNewUnempPop] = useState<number>(11000);
-  const [newInactivePop, setNewInactivePop] = useState<number>(54000);
 
   const sortedData = [...data].sort((a, b) => a.year - b.year);
-
-  const handleCreateRow = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newYear || newTotalPop <= 0) return;
-
-    const newPoint = computeDataPoint({
-      year: Number(newYear),
-      totalPopulation: Number(newTotalPop),
-      pop0To14: Number(newPop0To14),
-      pop15Plus: Number(newPop15Plus),
-      employedPopulation: Number(newEmployedPop),
-      unemployedPopulation: Number(newUnempPop),
-      economicallyNotActive: Number(newInactivePop),
-      labourForce: Number(newEmployedPop) + Number(newUnempPop),
-    });
-
-    onAddRow(newPoint);
-    setIsAdding(false);
-  };
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs my-6">
@@ -80,14 +50,6 @@ export const DataTable: React.FC<DataTableProps> = ({ data, onAddRow, onDeleteRo
           </div>
 
           <button
-            onClick={() => setIsAdding(!isAdding)}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white rounded-xl transition-all cursor-pointer shadow-xs"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            <span>Add Row</span>
-          </button>
-
-          <button
             onClick={onExportCsv}
             className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl transition-all cursor-pointer"
           >
@@ -96,97 +58,6 @@ export const DataTable: React.FC<DataTableProps> = ({ data, onAddRow, onDeleteRo
           </button>
         </div>
       </div>
-
-      {/* Add Row Drawer / Form */}
-      {isAdding && (
-        <form onSubmit={handleCreateRow} className="mb-6 p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-4">
-          <div className="text-xs font-bold text-slate-800 flex items-center justify-between">
-            <span className="uppercase tracking-widest text-[10px] text-indigo-600 font-extrabold">Insert Custom Year Data Point</span>
-            <button
-              type="button"
-              onClick={() => setIsAdding(false)}
-              className="text-slate-400 hover:text-slate-600 text-xs font-bold"
-            >
-              Cancel
-            </button>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div>
-              <label className="text-[11px] font-bold text-slate-700 block mb-1">Year</label>
-              <input
-                type="number"
-                value={newYear}
-                onChange={(e) => setNewYear(Number(e.target.value))}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-indigo-500"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-[11px] font-bold text-slate-700 block mb-1">Total Population</label>
-              <input
-                type="number"
-                value={newTotalPop}
-                onChange={(e) => setNewTotalPop(Number(e.target.value))}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-indigo-500"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-[11px] font-bold text-slate-700 block mb-1">Population 0-14</label>
-              <input
-                type="number"
-                value={newPop0To14}
-                onChange={(e) => setNewPop0To14(Number(e.target.value))}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
-            <div>
-              <label className="text-[11px] font-bold text-slate-700 block mb-1">Population 15+</label>
-              <input
-                type="number"
-                value={newPop15Plus}
-                onChange={(e) => setNewPop15Plus(Number(e.target.value))}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
-            <div>
-              <label className="text-[11px] font-bold text-slate-700 block mb-1">Employed Pop</label>
-              <input
-                type="number"
-                value={newEmployedPop}
-                onChange={(e) => setNewEmployedPop(Number(e.target.value))}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
-            <div>
-              <label className="text-[11px] font-bold text-slate-700 block mb-1">Unemployed Pop</label>
-              <input
-                type="number"
-                value={newUnempPop}
-                onChange={(e) => setNewUnempPop(Number(e.target.value))}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
-            <div>
-              <label className="text-[11px] font-bold text-slate-700 block mb-1">Inactive Pop</label>
-              <input
-                type="number"
-                value={newInactivePop}
-                onChange={(e) => setNewInactivePop(Number(e.target.value))}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl transition-all cursor-pointer shadow-xs"
-            >
-              Save Data Point
-            </button>
-          </div>
-        </form>
-      )}
 
       {/* Table */}
       <div className="overflow-x-auto rounded-xl border border-slate-200">

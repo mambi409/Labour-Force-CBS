@@ -23,13 +23,6 @@ export default function App() {
     setData(INITIAL_CURACAO_DATA);
   };
 
-  const handleAddProjection = (point: LabourDataPoint) => {
-    setData((prev) => {
-      const filtered = prev.filter((d) => d.year !== point.year);
-      return [...filtered, point].sort((a, b) => a.year - b.year);
-    });
-  };
-
   const handleDeleteRow = (year: number) => {
     setData((prev) => prev.filter((d) => d.year !== year));
   };
@@ -151,7 +144,6 @@ export default function App() {
           <div className="space-y-6">
             <DataTable
               data={data}
-              onAddRow={handleAddProjection}
               onDeleteRow={handleDeleteRow}
               onExportCsv={handleExportCsv}
             />

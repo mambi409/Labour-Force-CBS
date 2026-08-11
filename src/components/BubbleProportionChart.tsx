@@ -10,8 +10,9 @@ import {
   Cell,
   ResponsiveContainer,
   CartesianGrid,
+  LabelList,
 } from 'recharts';
-import { CircleDot, SlidersHorizontal, Info } from 'lucide-react';
+import { CircleDot, SlidersHorizontal } from 'lucide-react';
 
 interface BubbleProportionChartProps {
   data: LabourDataPoint[];
@@ -22,6 +23,7 @@ export const BubbleProportionChart: React.FC<BubbleProportionChartProps> = ({ da
   const [sizeMode, setSizeMode] = useState<'unemployed' | 'totalPop'>('unemployed');
 
   const sortedData = [...data].sort((a, b) => a.year - b.year);
+  const yearTicks = Array.from(new Set(sortedData.map((d) => d.year))).sort((a, b) => a - b);
 
   // Determine color according to unemployment rate severity
   const getBubbleColor = (rate: number, isProjection?: boolean) => {
@@ -162,6 +164,8 @@ export const BubbleProportionChart: React.FC<BubbleProportionChartProps> = ({ da
               dataKey={xAxisMode}
               name={xAxisMode === 'year' ? 'Year' : 'Total Population'}
               domain={xAxisMode === 'year' ? ['dataMin - 1', 'dataMax + 1'] : ['dataMin - 5000', 'dataMax + 5000']}
+              ticks={xAxisMode === 'year' ? yearTicks : undefined}
+              interval={0}
               tickFormatter={(val) => (xAxisMode === 'year' ? val.toString() : val.toLocaleString())}
               stroke="#64748b"
               fontSize={12}
@@ -192,16 +196,15 @@ export const BubbleProportionChart: React.FC<BubbleProportionChartProps> = ({ da
                   className="transition-all hover:opacity-80 cursor-pointer"
                 />
               ))}
+              <LabelList
+                dataKey="year"
+                position="top"
+                dy={-10}
+                style={{ fontSize: '11px', fontWeight: '700', fill: '#334155', pointerEvents: 'none' }}
+              />
             </Scatter>
           </ScatterChart>
         </ResponsiveContainer>
-      </div>
-
-      <div className="mt-4 p-3 bg-indigo-50 border border-indigo-100 rounded-xl text-xs text-indigo-950 flex items-start gap-2">
-        <Info className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
-        <span>
-          <strong>Proportional Insight:</strong> The size of each bubble corresponds directly to the headcount magnitude ({sizeMode === 'unemployed' ? 'unemployed individuals' : 'total population'}), giving immediate visual emphasis to the 2020 COVID outbreak peak bubble.
-        </span>
       </div>
     </div>
   );
