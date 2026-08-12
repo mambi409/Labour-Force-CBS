@@ -83,7 +83,7 @@ export const KpiCards: React.FC<KpiCardsProps> = ({
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-[10px] bg-[#02a0cc] flex items-center justify-center text-white shrink-0 shadow-xs">
                       <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <h3 className="text-base sm:text-lg font-semibold text-[#0091c3] leading-snug flex-1">
+                    <h3 className="text-lg sm:text-xl font-medium text-[#0091c3] leading-snug flex-1">
                       {config.label}
                     </h3>
                     {isSelected && (
@@ -94,19 +94,19 @@ export const KpiCards: React.FC<KpiCardsProps> = ({
                     )}
                   </div>
 
-                  <p className="text-sm text-slate-600 font-normal mt-2 leading-relaxed">
+                  <p className="text-base sm:text-lg text-slate-700 font-normal mt-2 leading-relaxed">
                     Glossary of terms and formulas used to calculate statistics.
                   </p>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-slate-100 text-xs">
+                <div className="mt-3 pt-2 border-t border-slate-100 text-sm">
                   {isSelected ? (
-                    <div className="py-1 px-2.5 rounded-full bg-slate-100 text-slate-800 font-semibold text-xs text-center uppercase tracking-wider flex items-center justify-center gap-1 border border-slate-200">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600" /> Selected
+                    <div className="py-1 px-2.5 rounded-full bg-slate-100 text-slate-800 font-medium text-sm text-center uppercase tracking-wider flex items-center justify-center gap-1 border border-slate-200">
+                      <CheckCircle2 className="w-4 h-4 text-indigo-600" /> Selected
                     </div>
                   ) : (
-                    <div className="text-slate-400 text-xs text-center hover:text-indigo-600 font-medium">
-                      Click to view chart &rarr;
+                    <div className="text-slate-500 text-sm text-center hover:text-indigo-600 font-normal">
+                      Click to view glossary &rarr;
                     </div>
                   )}
                 </div>
