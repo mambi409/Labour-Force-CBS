@@ -16,6 +16,7 @@ export interface LabourDataPoint {
 }
 
 export type MetricKey =
+  | 'generalInformation'
   | 'totalPopulation'
   | 'pop0To14'
   | 'pop15Plus'
@@ -37,6 +38,17 @@ export interface MetricMeta {
 }
 
 export const METRIC_CONFIGS: Record<MetricKey, MetricMeta> = {
+  generalInformation: {
+    key: 'generalInformation',
+    label: 'General Information',
+    shortLabel: 'General Information',
+    description: 'General Labour Force Overview & Unemployment Rate (%)',
+    color: '#0284c7',
+    bgLight: 'bg-sky-50/80',
+    borderColor: 'border-sky-200',
+    textColor: 'text-sky-700',
+    badgeBg: 'bg-sky-100 text-sky-800',
+  },
   totalPopulation: {
     key: 'totalPopulation',
     label: 'Total Population',

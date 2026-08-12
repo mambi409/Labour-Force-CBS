@@ -14,20 +14,22 @@ import { TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight, Award, ShieldAl
 
 interface UnemploymentTrendChartProps {
   data: LabourDataPoint[];
-  selectedMetric?: MetricKey;
+  selectedMetric?: MetricKey | null;
 }
 
 export const UnemploymentTrendChart: React.FC<UnemploymentTrendChartProps> = ({
   data,
-  selectedMetric = 'unemployedPopulation',
+  selectedMetric,
 }) => {
   if (!data || data.length === 0) return null;
 
-  const config = METRIC_CONFIGS[selectedMetric] || METRIC_CONFIGS.unemployedPopulation;
+  const currentMetric = selectedMetric || 'generalInformation';
+  const isPercentMetric = currentMetric === 'generalInformation';
+  const config = METRIC_CONFIGS[currentMetric] || METRIC_CONFIGS.generalInformation;
   const sortedData = [...data].sort((a, b) => a.year - b.year);
 
   const formattedData = sortedData.map((d) => {
-    const val = (d[selectedMetric] as number) ?? 0;
+    const val = isPercentMetric ? d.unemploymentRate : ((d[currentMetric] as number) ?? 0);
     return {
       year: d.year,
       value: val,
@@ -52,6 +54,7 @@ export const UnemploymentTrendChart: React.FC<UnemploymentTrendChartProps> = ({
   const totalPctChange = Number(((totalDiff / firstVal) * 100).toFixed(1));
 
   const formatNumber = (num: number) => {
+    if (isPercentMetric) return `${num}%`;
     if (num >= 1000000) return `${(num / 1000000).toFixed(2)}M`;
     if (num >= 1000) return `${(num / 1000).toFixed(1)}k`;
     return num.toLocaleString();
@@ -79,7 +82,7 @@ export const UnemploymentTrendChart: React.FC<UnemploymentTrendChartProps> = ({
               {config.label}
             </span>
             <span className="text-xl font-black text-white">
-              {pt.value.toLocaleString()}
+              {isPercentMetric ? `${pt.value}%` : pt.value.toLocaleString()}
             </span>
           </div>
 
@@ -108,13 +111,15 @@ export const UnemploymentTrendChart: React.FC<UnemploymentTrendChartProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <div className="flex items-center gap-2">
-            <BarChart3 className="w-5 h-5" style={{ color: config.color }} />
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-[10px] bg-[#02a0cc] flex items-center justify-center text-white shrink-0 shadow-xs">
+              <BarChart3 className="w-4 h-4 text-white" />
+            </div>
             <h3 className="text-base font-extrabold text-slate-900">
               {config.label} Trend Analysis (2016 – 2025)
             </h3>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5 ml-10">
             {config.description} across the 9-year Curaçao Labour Force study period
           </p>
         </div>
@@ -146,7 +151,7 @@ export const UnemploymentTrendChart: React.FC<UnemploymentTrendChartProps> = ({
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={formattedData} margin={{ top: 20, right: 25, left: -10, bottom: 0 }}>
             <defs>
-              <linearGradient id={`gradient-${selectedMetric}`} x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id={`gradient-${currentMetric}`} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={config.color} stopOpacity={0.35} />
                 <stop offset="95%" stopColor={config.color} stopOpacity={0.02} />
               </linearGradient>
@@ -166,7 +171,7 @@ export const UnemploymentTrendChart: React.FC<UnemploymentTrendChartProps> = ({
               dataKey="value"
               stroke={config.color}
               strokeWidth={3}
-              fill={`url(#gradient-${selectedMetric})`}
+              fill={`url(#gradient-${currentMetric})`}
               dot={{ r: 5, fill: config.color, stroke: '#ffffff', strokeWidth: 2 }}
               activeDot={{ r: 8, fill: config.color, stroke: '#ffffff', strokeWidth: 3 }}
             />

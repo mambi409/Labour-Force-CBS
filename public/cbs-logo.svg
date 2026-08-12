@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 280" width="480" height="280">
+  <!-- Top Feather / Wing 1 -->
+  <path
+    d="M 120 120 C 200 60, 320 10, 450 0 C 350 36, 230 80, 160 124 Z"
+    fill="#ffffff"
+  />
+
+  <!-- Middle Feather / Wing 2 -->
+  <path
+    d="M 140 116 C 220 76, 330 36, 430 32 C 340 56, 240 88, 172 122 Z"
+    fill="#ffffff"
+  />
+
+  <!-- Bottom Feather / Wing 3 -->
+  <path
+    d="M 168 112 C 240 88, 330 70, 410 70 C 330 84, 250 102, 190 120 Z"
+    fill="#ffffff"
+  />
+
+  <!-- CBS Text -->
+  <text
+    x="60"
+    y="210"
+    fill="#ffffff"
+    font-family="Impact, Arial Black, sans-serif"
+    font-weight="900"
+    font-style="italic"
+    font-size="130"
+    letterSpacing="-4"
+  >CBS</text>
+
+  <!-- Subtitle Text -->
+  <text
+    x="4"
+    y="254"
+    fill="#ffffff"
+    font-family="Arial, Helvetica, sans-serif"
+    font-weight="700"
+    font-size="28"
+    letterSpacing="-0.5"
+  >Central Bureau of Statistics Curaçao</text>
+</svg>

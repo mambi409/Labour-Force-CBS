@@ -16,13 +16,15 @@ export const DataTable: React.FC<DataTableProps> = ({ data, onExportCsv }) => {
     <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs my-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <div className="flex items-center gap-2">
-            <Table className="w-5 h-5 text-indigo-600" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-[10px] bg-[#02a0cc] flex items-center justify-center text-white shrink-0 shadow-xs">
+              <Table className="w-4 h-4 text-white" />
+            </div>
             <h3 className="text-base font-bold text-slate-900">
               Official Curacao Labour Force Dataset (2016 – 2025)
             </h3>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5 ml-10">
             Full breakdown including working-age (15+), active labour force, and economically inactive population
           </p>
         </div>

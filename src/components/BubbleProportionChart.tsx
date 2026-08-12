@@ -77,13 +77,15 @@ export const BubbleProportionChart: React.FC<BubbleProportionChartProps> = ({ da
     <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs my-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <div className="flex items-center gap-2">
-            <CircleDot className="w-5 h-5 text-indigo-600" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-[10px] bg-[#02a0cc] flex items-center justify-center text-white shrink-0 shadow-xs">
+              <CircleDot className="w-4 h-4 text-white" />
+            </div>
             <h3 className="text-base font-bold text-slate-900">
               Multi-Dimensional Bubble Matrix Analysis
             </h3>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5 ml-10">
             Bubble position encodes rate severity; Bubble volume encodes headcount magnitudes.
           </p>
         </div>
