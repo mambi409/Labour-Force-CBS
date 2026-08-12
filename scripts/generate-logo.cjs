@@ -1,51 +1,93 @@
-const sharp = require('sharp');
 const fs = require('fs');
+const path = require('path');
+const sharp = require('sharp');
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 320" width="1080" height="640">
-  <g fill="#ffffff">
-    <!-- Wing 1 (Top Feather) -->
-    <path d="M 135 138 C 225 65, 385 10, 525 0 C 405 38, 265 85, 180 142 Z" />
+// Create high quality SVG for white CBS logo
+const svgLogo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 280" width="520" height="280">
+  <defs>
+    <style>
+      .cbs-text {
+        font-family: 'Impact', 'Arial Black', 'Trebuchet MS', sans-serif;
+        font-weight: 900;
+        font-style: italic;
+        font-size: 135px;
+        fill: #ffffff;
+        letter-spacing: -3px;
+      }
+      .sub-text {
+        font-family: 'Arial', 'Helvetica', sans-serif;
+        font-weight: 700;
+        font-size: 27px;
+        fill: #ffffff;
+        letter-spacing: -0.3px;
+      }
+    </style>
+  </defs>
 
-    <!-- Wing 2 (Middle Feather) -->
-    <path d="M 162 133 C 248 84, 382 42, 498 36 C 392 62, 272 98, 195 139 Z" />
+  <!-- Top Feather / Wing 1 -->
+  <path
+    d="M 125 125 C 210 60, 340 8, 485 0 C 375 38, 245 84, 168 128 Z"
+    fill="#ffffff"
+  />
 
-    <!-- Wing 3 (Bottom Feather) -->
-    <path d="M 195 128 C 272 98, 382 76, 472 76 C 378 92, 278 114, 218 135 Z" />
+  <!-- Middle Feather / Wing 2 -->
+  <path
+    d="M 148 120 C 232 78, 350 36, 460 32 C 362 58, 255 92, 182 126 Z"
+    fill="#ffffff"
+  />
 
-    <!-- Letter C -->
-    <path d="M 132 155 C 112 155 92 163 78 177 C 62 192 56 210 60 227 C 65 244 82 255 104 255 C 126 255 146 246 158 232 L 136 218 C 128 227 117 232 108 232 C 96 232 88 225 86 215 C 83 205 88 192 97 184 C 105 175 117 171 127 171 C 136 171 145 175 150 182 L 170 168 C 160 159 147 155 132 155 Z" />
+  <!-- Bottom Feather / Wing 3 -->
+  <path
+    d="M 178 116 C 255 90, 350 72, 435 72 C 350 86, 265 106, 202 124 Z"
+    fill="#ffffff"
+  />
 
-    <!-- Letter B -->
-    <path d="M 172 157 L 144 253 L 204 253 C 226 253 243 243 247 227 C 250 216 244 207 233 202 C 242 198 246 189 243 178 C 239 164 224 157 201 157 Z M 181 174 L 198 174 C 207 174 214 178 215 184 C 217 190 212 194 203 194 L 186 194 Z M 175 209 L 194 209 C 204 209 212 214 214 221 C 215 228 209 235 198 235 L 168 235 Z" />
+  <!-- CBS Text -->
+  <text x="65" y="212" class="cbs-text">CBS</text>
 
-    <!-- Letter S -->
-    <path d="M 308 172 C 300 162 287 157 271 157 C 250 157 235 167 239 181 C 241 191 251 196 267 200 C 286 205 297 210 294 225 C 291 242 270 255 244 255 C 224 255 208 247 201 232 L 221 221 C 227 230 236 236 246 236 C 258 236 267 230 268 223 C 270 216 263 211 247 207 C 228 201 216 194 219 179 C 223 162 244 155 270 155 C 288 155 304 162 313 174 Z" />
-
-    <!-- Subtitle: Central Bureau of Statistics Curaçao -->
-    <path d="M 12 278 H 528 V 298 H 12 Z" opacity="0" />
-    <text x="10" y="296" font-family="'Arial Black', 'Arial', sans-serif" font-weight="900" font-size="28" letter-spacing="-0.5">Central Bureau of Statistics Curaçao</text>
-  </g>
+  <!-- Subtitle Text -->
+  <text x="5" y="258" class="sub-text">Central Bureau of Statistics Curaçao</text>
 </svg>`;
 
-async function generate() {
-  const buf = Buffer.from(svg);
+async function main() {
+  const publicDir = path.join(__dirname, '..', 'public');
+  const svgPath = path.join(publicDir, 'cbs-logo.svg');
   
-  await sharp(buf)
-    .trim()
-    .png()
-    .toFile('public/cbs_logo-01.png');
+  fs.writeFileSync(svgPath, svgLogo, 'utf8');
+  console.log('Saved SVG to:', svgPath);
 
-  await sharp(buf)
-    .trim()
+  // Convert to high-res transparent PNGs
+  const pngBuffer = await sharp(Buffer.from(svgLogo))
+    .resize(1040, 560)
     .png()
-    .toFile('public/cbs-logo.png');
+    .toBuffer();
 
-  await sharp(buf)
-    .trim()
-    .png()
-    .toFile('public/cbs-official.png');
+  const targetFiles = [
+    'cbs_logo-01.png',
+    'cbs-logo-fixed.png',
+    'cbs-logo.png',
+    'cbs-official.png',
+    'test-cbs.png'
+  ];
 
-  console.log('Successfully regenerated all public logo files');
+  for (const fileName of targetFiles) {
+    const filePath = path.join(publicDir, fileName);
+    fs.writeFileSync(filePath, pngBuffer);
+    console.log('Saved PNG to:', filePath);
+  }
+
+  // Also sync to dist if dist exists
+  const distDir = path.join(__dirname, '..', 'dist');
+  if (fs.existsSync(distDir)) {
+    fs.writeFileSync(path.join(distDir, 'cbs-logo.svg'), svgLogo, 'utf8');
+    for (const fileName of targetFiles) {
+      fs.writeFileSync(path.join(distDir, fileName), pngBuffer);
+    }
+    console.log('Synced files to dist/');
+  }
 }
 
-generate().catch(console.error);
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

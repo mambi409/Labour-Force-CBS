@@ -1,42 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 280" width="480" height="280">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 280" width="520" height="280">
+  <defs>
+    <style>
+      .cbs-text {
+        font-family: 'Impact', 'Arial Black', 'Trebuchet MS', sans-serif;
+        font-weight: 900;
+        font-style: italic;
+        font-size: 135px;
+        fill: #ffffff;
+        letter-spacing: -3px;
+      }
+      .sub-text {
+        font-family: 'Arial', 'Helvetica', sans-serif;
+        font-weight: 700;
+        font-size: 27px;
+        fill: #ffffff;
+        letter-spacing: -0.3px;
+      }
+    </style>
+  </defs>
+
   <!-- Top Feather / Wing 1 -->
   <path
-    d="M 120 120 C 200 60, 320 10, 450 0 C 350 36, 230 80, 160 124 Z"
+    d="M 125 125 C 210 60, 340 8, 485 0 C 375 38, 245 84, 168 128 Z"
     fill="#ffffff"
   />
 
   <!-- Middle Feather / Wing 2 -->
   <path
-    d="M 140 116 C 220 76, 330 36, 430 32 C 340 56, 240 88, 172 122 Z"
+    d="M 148 120 C 232 78, 350 36, 460 32 C 362 58, 255 92, 182 126 Z"
     fill="#ffffff"
   />
 
   <!-- Bottom Feather / Wing 3 -->
   <path
-    d="M 168 112 C 240 88, 330 70, 410 70 C 330 84, 250 102, 190 120 Z"
+    d="M 178 116 C 255 90, 350 72, 435 72 C 350 86, 265 106, 202 124 Z"
     fill="#ffffff"
   />
 
   <!-- CBS Text -->
-  <text
-    x="60"
-    y="210"
-    fill="#ffffff"
-    font-family="Impact, Arial Black, sans-serif"
-    font-weight="900"
-    font-style="italic"
-    font-size="130"
-    letterSpacing="-4"
-  >CBS</text>
+  <text x="65" y="212" class="cbs-text">CBS</text>
 
   <!-- Subtitle Text -->
-  <text
-    x="4"
-    y="254"
-    fill="#ffffff"
-    font-family="Arial, Helvetica, sans-serif"
-    font-weight="700"
-    font-size="28"
-    letterSpacing="-0.5"
-  >Central Bureau of Statistics Curaçao</text>
+  <text x="5" y="258" class="sub-text">Central Bureau of Statistics Curaçao</text>
 </svg>
