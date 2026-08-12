@@ -80,8 +80,8 @@ export const KpiCards: React.FC<KpiCardsProps> = ({
               >
                 <div>
                   <div className="flex items-center gap-2.5 mb-2">
-                    <div className="w-8 h-8 rounded-[10px] bg-[#02a0cc] flex items-center justify-center text-white shrink-0 shadow-xs">
-                      <BookOpen className="w-4 h-4 text-white" />
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-[10px] bg-[#02a0cc] flex items-center justify-center text-white shrink-0 shadow-xs">
+                      <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                     <h3 className="text-base sm:text-lg font-semibold text-[#0091c3] leading-snug flex-1">
                       {config.label}
@@ -149,8 +149,8 @@ export const KpiCards: React.FC<KpiCardsProps> = ({
             >
               <div>
                 <div className="flex items-center gap-2.5 mb-2">
-                  <div className="w-8 h-8 rounded-[10px] bg-[#02a0cc] flex items-center justify-center text-white shrink-0 shadow-xs">
-                    <IconComp className="w-4 h-4 text-white" />
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-[10px] bg-[#02a0cc] flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <IconComp className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <h3 className="text-base sm:text-lg font-semibold text-[#0091c3] leading-snug flex-1">
                     {config.label}

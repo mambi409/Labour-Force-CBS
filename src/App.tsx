@@ -8,7 +8,8 @@ import { BubbleProportionChart } from './components/BubbleProportionChart';
 import { YearlyProportionDonut } from './components/YearlyProportionDonut';
 import { DataTable } from './components/DataTable';
 import { AiAnalystDrawer } from './components/AiAnalystDrawer';
-import { BarChart3, PieChart, Table, CircleDot, BookOpen, Info } from 'lucide-react';
+import { GlossarySection } from './components/GlossarySection';
+import { BarChart3, PieChart, Table, CircleDot, BookOpen } from 'lucide-react';
 
 export default function App() {
   const [data, setData] = useState<LabourDataPoint[]>(INITIAL_CURACAO_DATA);
@@ -63,33 +64,7 @@ export default function App() {
 
         {/* Content Section - Rendered based on selected card */}
         {selectedMetric === 'generalInformation' ? (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-10 shadow-xs my-6 min-h-[320px]">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-100 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-sky-50 text-[#0091c3] flex items-center justify-center border border-sky-100">
-                <BookOpen className="w-5 h-5" />
-              </div>
-              <div>
-                <h2 className="text-lg sm:text-xl font-bold text-slate-900">
-                  General Information
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-500">
-                  Glossary of terms and formulas used to calculate statistics.
-                </p>
-              </div>
-            </div>
-
-            <div className="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center bg-slate-50/50 my-4">
-              <div className="w-12 h-12 rounded-full bg-white text-[#0091c3] flex items-center justify-center mx-auto mb-3 shadow-xs border border-slate-200">
-                <Info className="w-6 h-6" />
-              </div>
-              <h3 className="text-sm sm:text-base font-bold text-slate-800 mb-1">
-                Glossary & Definitions Space
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto leading-relaxed">
-                This page is prepared for your terms and calculation formulas. Share the details whenever you are ready and they will be added here!
-              </p>
-            </div>
-          </div>
+          <GlossarySection />
         ) : selectedMetric ? (
           <div>
             {/* Navigation Tabs */}
