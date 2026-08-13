@@ -39,18 +39,18 @@ export const KpiCards: React.FC<KpiCardsProps> = ({
   if (!data || data.length === 0) return null;
 
   const sorted = [...data].sort((a, b) => a.year - b.year);
-  const baseline = sorted[0]; // 2016
+  const baseline = sorted.find((d) => d.year === 2024) || sorted[0];
   const latest = sorted[sorted.length - 1]; // 2025 or latest
 
   const metricKeys: MetricKey[] = [
-    'generalInformation',
     'totalPopulation',
     'pop0To14',
     'pop15Plus',
+    'labourForce',
     'employedPopulation',
     'unemployedPopulation',
     'economicallyNotActive',
-    'labourForce',
+    'generalInformation',
   ];
 
   return (
@@ -63,7 +63,8 @@ export const KpiCards: React.FC<KpiCardsProps> = ({
 
           let displayVal = '';
           let subText = '';
-          let propLabel = '';
+          let propPct = '';
+          let propContext = '';
           let pctChangeText = '';
           let isPositive = true;
 
@@ -94,18 +95,18 @@ export const KpiCards: React.FC<KpiCardsProps> = ({
                     )}
                   </div>
 
-                  <p className="text-base sm:text-lg text-slate-700 font-normal mt-2 leading-relaxed">
+                  <p className="text-sm sm:text-base text-slate-600 font-normal mt-1.5 leading-relaxed">
                     Glossary of terms and formulas used to calculate statistics.
                   </p>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-slate-100 text-sm">
+                <div className="mt-3 pt-2 border-t border-slate-100 text-xs sm:text-sm">
                   {isSelected ? (
-                    <div className="py-1 px-2.5 rounded-full bg-slate-100 text-slate-800 font-medium text-sm text-center uppercase tracking-wider flex items-center justify-center gap-1 border border-slate-200">
+                    <div className="py-1 px-2.5 rounded-full bg-slate-100 text-slate-800 font-medium text-xs sm:text-sm text-center uppercase tracking-wider flex items-center justify-center gap-1 border border-slate-200">
                       <CheckCircle2 className="w-4 h-4 text-indigo-600" /> Selected
                     </div>
                   ) : (
-                    <div className="text-slate-500 text-sm text-center hover:text-indigo-600 font-normal">
+                    <div className="text-slate-500 text-xs sm:text-sm text-center hover:text-indigo-600 font-normal">
                       Click to view glossary &rarr;
                     </div>
                   )}
@@ -125,16 +126,20 @@ export const KpiCards: React.FC<KpiCardsProps> = ({
           isPositive = diff >= 0;
 
           if (key === 'totalPopulation') {
-            propLabel = '100% of Total';
+            propPct = '100.0%';
+            propContext = 'of Total';
           } else if (key === 'pop0To14' || key === 'pop15Plus') {
             const pct = ((latestValue / (latest.totalPopulation || 1)) * 100).toFixed(1);
-            propLabel = `${pct}% of Total Pop`;
+            propPct = `${pct}%`;
+            propContext = 'of Total Pop';
           } else if (key === 'employedPopulation' || key === 'unemployedPopulation') {
             const pct = ((latestValue / (latest.labourForce || 1)) * 100).toFixed(1);
-            propLabel = `${pct}% of Labour Force`;
+            propPct = `${pct}%`;
+            propContext = 'of Labour Force';
           } else if (key === 'labourForce' || key === 'economicallyNotActive') {
             const pct = ((latestValue / (latest.pop15Plus || 1)) * 100).toFixed(1);
-            propLabel = `${pct}% of Pop 15+`;
+            propPct = `${pct}%`;
+            propContext = 'of Pop 15+';
           }
 
           return (
@@ -164,18 +169,28 @@ export const KpiCards: React.FC<KpiCardsProps> = ({
                 </div>
 
                 <div className="mt-1">
-                  <div className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-                    {displayVal}
+                  <div className="flex items-baseline justify-between gap-2">
+                    <div className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                      {displayVal}
+                    </div>
+                    <div
+                      className={`text-xl sm:text-2xl font-bold tracking-tight text-right ${
+                        isPositive ? 'text-emerald-600' : 'text-rose-600'
+                      }`}
+                    >
+                      {propPct}
+                    </div>
                   </div>
-                  <div className="text-xs sm:text-sm font-semibold text-slate-500 mt-0.5">
-                    {subText}
+                  <div className="flex items-center justify-between gap-2 text-xs sm:text-sm font-semibold text-slate-500 mt-0.5">
+                    <span>{subText}</span>
+                    <span className="text-right">{propContext}</span>
                   </div>
                 </div>
               </div>
 
               <div className="mt-3 pt-2 border-t border-slate-100 flex flex-col gap-1.5 text-xs sm:text-sm">
                 <div className="flex items-center justify-between font-bold">
-                  <span className="text-slate-500 truncate">{propLabel}</span>
+                  <span className="text-slate-500 font-semibold text-xs sm:text-sm">Change (vs {baseline.year})</span>
                   <span
                     className={`inline-flex items-center gap-0.5 font-bold ${
                       isPositive ? 'text-emerald-600' : 'text-rose-600'
